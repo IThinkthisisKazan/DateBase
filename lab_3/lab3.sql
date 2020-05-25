@@ -39,13 +39,13 @@ PRIMARY KEY (id_issue)
 )
 GO
 
-CREATE TABLE shop(
-id_shop int IDENTITY(1,1) NOT NULL,
+CREATE TABLE location_archive(
+id_location_archive int IDENTITY(1,1) NOT NULL,
 id_issue int NOT NULL,
 address varchar(100) NOT NULL,
 country varchar(50) NOT NULL,
 name varchar(100) NOT NULL,
-PRIMARY KEY (id_shop)
+PRIMARY KEY (id_location_archive)
 )
 GO
 
@@ -59,13 +59,13 @@ INSERT INTO book VALUES(2,'Охота на овец','20' ,'1982')
 INSERT INTO author VALUES('Дэниель','Киз','1927-08-09','M')
 INSERT INTO issue VALUES(1,1,'2020-03-12','2020-04-12')
 INSERT INTO reader VALUES('Джек','Лондон','1876-12-12','79278701510')
-INSERT INTO shop VALUES(1,'Йошкар-Ола, Панфилова 20,','Россия','Книги')
+INSERT INTO location_archive VALUES(1,'Йошкар-Ола, Панфилова 20,','Россия','Книги')
 --2.С указанием списка людей 
 INSERT INTO book (id_author, name, price,date_relise) VALUES(2, 'Норвежский лес','17', '1987-09-04')
 INSERT INTO author (first_name, last_name, birthday, gender) VALUES ('Харуко', 'Муроками', '1949-12-12','М')
 INSERT INTO issue(id_book,id_reader, issuing_date, dead_line) VALUES (2,2, '2020-04-12', '2020-05-12')
 INSERT INTO reader(firstname, lastname, birthdate,contact_number) VALUES ('Юра','Петров','2020-01-12','79650018601') 
-INSERT INTO shop (id_issue, address, country, name) VALUES (2, 'Нурсултан, Комсомольская 15', 'Казахстан', 'Книжный уголок')
+INSERT INTO location_archive (id_issue, address, country, name) VALUES (2, 'Нурсултан, Комсомольская 15', 'Казахстан', 'Книжный уголок')
 --3.С чтением значения из другой таблицы
 
 CREATE TABLE archive(
@@ -98,7 +98,7 @@ TRUNCATE TABLE  archive
 UPDATE book SET price = '19'
 UPDATE book SET date_relise = '1992-10-05' 
 --2. По условию обновляя один атрибут
-UPDATE shop SET country = 'Казахстан' WHERE name = 'Книги'
+UPDATE location_archive SET country = 'Казахстан' WHERE name = 'Книги'
 --3. По условию обновляя несколько атрибутов
 UPDATE reader SET firstname = 'Артём', lastname = 'Носиков', birthdate = '2001-05-04',contact_number = '79671237634' WHERE id_reader = 2
 
@@ -106,7 +106,7 @@ UPDATE reader SET firstname = 'Артём', lastname = 'Носиков', birthdate = '2001-0
 --1. С определенным набором извлекаемых атрибутов 
 SELECT firstname, lastname, contact_number FROM reader
 --2. Со всеми атрибутами
-SELECT * FROM shop
+SELECT * FROM location_archive
 --3. С условием по атрибуту
 SELECT * FROM reader WHERE id_reader = '2'
 
@@ -138,9 +138,9 @@ SELECT MAX(birthday) FROM author
 --AVG
 SELECT AVG(id_author) FROM author
 --SUM
-SELECT SUM(id_shop) FROM shop
+SELECT SUM(id_location_archive) FROM location_archive
 --COUNT
-SELECT COUNT(*) FROM shop WHERE country = 'Казахстан'
+SELECT COUNT(*) FROM location_archive WHERE country = 'Казахстан'
 
 --8.SELECT GROUP BY + HAVING
 INSERT INTO book VALUES(1,'Охота на овец','25' ,'1987')
@@ -170,13 +170,13 @@ LEFT JOIN book ON (author.id_author = book.id_author)
 LEFT JOIN reader ON (reader.id_reader = author.id_author) 
 WHERE  author.id_author = 1 AND gender = 'М' AND book.id_author = 1  --условие для поля 1-ой таблицы
 --4. FULL OUTER JOIN двух таблиц
-INSERT INTO shop (id_issue, address, country, name) VALUES (8, 'Казань, Гагарина 27', 'Татарстан', 'Гарри Поттер') 
-INSERT INTO shop (id_issue, address, country, name) VALUES (9, 'Йошкар-ола, Южная 45', 'Марий-Эль', 'Книжная шкатулка') 
+INSERT INTO location_archive (id_issue, address, country, name) VALUES (8, 'Казань, Гагарина 27', 'Татарстан', 'Гарри Поттер') 
+INSERT INTO location_archive (id_issue, address, country, name) VALUES (9, 'Йошкар-ола, Южная 45', 'Марий-Эль', 'Книжная шкатулка') 
 --
-SELECT author.id_author, shop.id_shop 
+SELECT author.id_author, location_archive.id_location_archive 
 FROM author 
-FULL OUTER JOIN shop 
-ON author.id_author = shop.id_issue
+FULL OUTER JOIN location_archive 
+ON author.id_author = location_archive.id_issue
 
 --10. Подзапросы
 --1. Написать запрос с WHERE IN (подзапрос)
