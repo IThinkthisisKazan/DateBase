@@ -1,11 +1,11 @@
---0.	CREATE 
+--0.CREATE
 CREATE TABLE reader (
 id_reader int IDENTITY(1,1) NOT NULL,
 firstname varchar(50) NOT NULL,
 lastname varchar(50) NOT NULL,
 birthdate date NOT NULL,
 contact_number varchar(20) NOT NULL,
-PRIMARY KEY  (id_reader)
+PRIMARY KEY (id_reader)
 )
 GO
 
@@ -50,23 +50,23 @@ PRIMARY KEY (id_location_archive)
 GO
 
 --1.INSERT
---1.Без указания списка
-INSERT INTO book VALUES(1,'Цветы для Элджернона','15' ,'1959')
-INSERT INTO book VALUES(2,'Норвежский лес','13' ,'1991')
-INSERT INTO book VALUES(2,'Зомбо ящик','19' ,'1990')
+--1.Р‘РµР· СѓРєР°Р·Р°РЅРёСЏ СЃРїРёСЃРєР°
+INSERT INTO book VALUES(1,'Р¦РІРµС‚С‹ РґР»СЏ Р­Р»РґР¶РµСЂРЅРѕРЅР°','15' ,'1959')
+INSERT INTO book VALUES(2,'РќРѕСЂРІРµР¶СЃРєРёР№ Р»РµСЃ','13' ,'1991')
+INSERT INTO book VALUES(2,'Р—РѕРјР±Рѕ СЏС‰РёРє','19' ,'1990')
 INSERT INTO book VALUES(2,'1Q84','14' ,'1994')
-INSERT INTO book VALUES(2,'Охота на овец','20' ,'1982')
-INSERT INTO author VALUES('Дэниель','Киз','1927-08-09','M')
+INSERT INTO book VALUES(2,'РћС…РѕС‚Р° РЅР° РѕРІРµС†','20' ,'1982')
+INSERT INTO author VALUES('Р”СЌРЅРёРµР»СЊ','РљРёР·','1927-08-09','M')
 INSERT INTO issue VALUES(1,1,'2020-03-12','2020-04-12')
-INSERT INTO reader VALUES('Джек','Лондон','1876-12-12','79278701510')
-INSERT INTO location_archive VALUES(1,'Йошкар-Ола, Панфилова 20,','Россия','Книги')
---2.С указанием списка людей 
-INSERT INTO book (id_author, name, price,date_relise) VALUES(2, 'Норвежский лес','17', '1987-09-04')
-INSERT INTO author (first_name, last_name, birthday, gender) VALUES ('Харуко', 'Муроками', '1949-12-12','М')
+INSERT INTO reader VALUES('Р”Р¶РµРє','Р›РѕРЅРґРѕРЅ','1876-12-12','79278701510')
+INSERT INTO location_archive VALUES(1,'Р™РѕС€РєР°СЂ-РћР»Р°, РџР°РЅС„РёР»РѕРІР° 20,','Р РѕСЃСЃРёСЏ','РљРЅРёРіРё')
+--2.РЎ СѓРєР°Р·Р°РЅРёРµРј СЃРїРёСЃРєР° Р»СЋРґРµР№
+INSERT INTO book (id_author, name, price,date_relise) VALUES(2, 'РќРѕСЂРІРµР¶СЃРєРёР№ Р»РµСЃ','17', '1987-09-04')
+INSERT INTO author (first_name, last_name, birthday, gender) VALUES ('РҐР°СЂСѓРєРѕ', 'РњСѓСЂРѕРєР°РјРё', '1949-12-12','Рњ')
 INSERT INTO issue(id_book,id_reader, issuing_date, dead_line) VALUES (2,2, '2020-04-12', '2020-05-12')
-INSERT INTO reader(firstname, lastname, birthdate,contact_number) VALUES ('Юра','Петров','2020-01-12','79650018601') 
-INSERT INTO location_archive (id_issue, address, country, name) VALUES (2, 'Нурсултан, Комсомольская 15', 'Казахстан', 'Книжный уголок')
---3.С чтением значения из другой таблицы
+INSERT INTO reader(firstname, lastname, birthdate,contact_number) VALUES ('Р®СЂР°','РџРµС‚СЂРѕРІ','2020-01-12','79650018601')
+INSERT INTO location_archive (id_issue, address, country, name) VALUES (2, 'РќСѓСЂСЃСѓР»С‚Р°РЅ, РљРѕРјСЃРѕРјРѕР»СЊСЃРєР°СЏ 15', 'РљР°Р·Р°С…СЃС‚Р°РЅ', 'РљРЅРёР¶РЅС‹Р№ СѓРіРѕР»РѕРє')
+--3.РЎ С‡С‚РµРЅРёРµРј Р·РЅР°С‡РµРЅРёСЏ РёР· РґСЂСѓРіРѕР№ С‚Р°Р±Р»РёС†С‹
 
 CREATE TABLE archive(
 id_author int NOT NULL,
@@ -76,74 +76,74 @@ date_relise date NOT NULL,
 )
 GO
 
-INSERT INTO archive (id_author, name, price, date_relise) 
+INSERT INTO archive (id_author, name, price, date_relise)
 SELECT id_author, name, price, date_relise
-FROM book 
+FROM book
 
 --2.DELETE
---1. Всех записей
+--1. Р’СЃРµС… Р·Р°РїРёСЃРµР№
 DELETE archive
---2. По условию
+--2. РџРѕ СѓСЃР»РѕРІРёСЋ
 DELETE FROM book WHERE date_relise = '1959'
---3. Очистить таблицу
---Обновим таблицу
-INSERT INTO archive (id_author, name, price, date_relise) 
+--3. РћС‡РёСЃС‚РёС‚СЊ С‚Р°Р±Р»РёС†Сѓ
+--РћР±РЅРѕРІРёРј С‚Р°Р±Р»РёС†Сѓ
+INSERT INTO archive (id_author, name, price, date_relise)
 SELECT id_author, name, price, date_relise
-FROM book 
+FROM book
 
-TRUNCATE TABLE  archive
+TRUNCATE TABLE archive
 
 --3.UPDATE
---1. Всех записей
+--1. Р’СЃРµС… Р·Р°РїРёСЃРµР№
 UPDATE book SET price = '19'
-UPDATE book SET date_relise = '1992-10-05' 
---2. По условию обновляя один атрибут
-UPDATE location_archive SET country = 'Казахстан' WHERE name = 'Книги'
---3. По условию обновляя несколько атрибутов
-UPDATE reader SET firstname = 'Артём', lastname = 'Носиков', birthdate = '2001-05-04',contact_number = '79671237634' WHERE id_reader = 2
+UPDATE book SET date_relise = '1992-10-05'
+--2. РџРѕ СѓСЃР»РѕРІРёСЋ РѕР±РЅРѕРІР»СЏСЏ РѕРґРёРЅ Р°С‚СЂРёР±СѓС‚
+UPDATE location_archive SET country = 'РљР°Р·Р°С…СЃС‚Р°РЅ' WHERE name = 'РљРЅРёРіРё'
+--3. РџРѕ СѓСЃР»РѕРІРёСЋ РѕР±РЅРѕРІР»СЏСЏ РЅРµСЃРєРѕР»СЊРєРѕ Р°С‚СЂРёР±СѓС‚РѕРІ
+UPDATE reader SET firstname = 'РђСЂС‚С‘Рј', lastname = 'РќРѕСЃРёРєРѕРІ', birthdate = '2001-05-04',contact_number = '79671237634' WHERE id_reader = 2
 
 --4.SELECT
---1. С определенным набором извлекаемых атрибутов 
+--1. РЎ РѕРїСЂРµРґРµР»РµРЅРЅС‹Рј РЅР°Р±РѕСЂРѕРј РёР·РІР»РµРєР°РµРјС‹С… Р°С‚СЂРёР±СѓС‚РѕРІ
 SELECT firstname, lastname, contact_number FROM reader
---2. Со всеми атрибутами
+--2. РЎРѕ РІСЃРµРјРё Р°С‚СЂРёР±СѓС‚Р°РјРё
 SELECT * FROM location_archive
---3. С условием по атрибуту
+--3. РЎ СѓСЃР»РѕРІРёРµРј РїРѕ Р°С‚СЂРёР±СѓС‚Сѓ
 SELECT * FROM reader WHERE id_reader = '2'
 
 --5.SELECT ORDER BY + TOP (LIMIT)
---1. С сортировкой по возрастанию ASC + ограничение вывода количества записей
+--1. РЎ СЃРѕСЂС‚РёСЂРѕРІРєРѕР№ РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ ASC + РѕРіСЂР°РЅРёС‡РµРЅРёРµ РІС‹РІРѕРґР° РєРѕР»РёС‡РµСЃС‚РІР° Р·Р°РїРёСЃРµР№
 SELECT TOP 2 * FROM author ORDER BY birthday ASC
---2. С сортировкой по убыванию DESC
+--2. РЎ СЃРѕСЂС‚РёСЂРѕРІРєРѕР№ РїРѕ СѓР±С‹РІР°РЅРёСЋ DESC
 SELECT TOP 2 * FROM author ORDER BY birthday DESC
---3. С сортировкой по двум атрибутам + ограничение вывода количества записей
+--3. РЎ СЃРѕСЂС‚РёСЂРѕРІРєРѕР№ РїРѕ РґРІСѓРј Р°С‚СЂРёР±СѓС‚Р°Рј + РѕРіСЂР°РЅРёС‡РµРЅРёРµ РІС‹РІРѕРґР° РєРѕР»РёС‡РµСЃС‚РІР° Р·Р°РїРёСЃРµР№
 SELECT TOP 2 * FROM author ORDER BY birthday, last_name DESC
---4. С сортировкой по первому атрибуту, из списка извлекаемых
+--4. РЎ СЃРѕСЂС‚РёСЂРѕРІРєРѕР№ РїРѕ РїРµСЂРІРѕРјСѓ Р°С‚СЂРёР±СѓС‚Сѓ, РёР· СЃРїРёСЃРєР° РёР·РІР»РµРєР°РµРјС‹С…
 SELECT TOP 2 * FROM issue ORDER BY issuing_date
 
---6 Работа с датами. Необходимо, чтобы одна из таблиц содержала атрибут с типом DATETIME.
---1. WHERE по дате
---Добавляю строку для проверки
+--6 Р Р°Р±РѕС‚Р° СЃ РґР°С‚Р°РјРё. РќРµРѕР±С…РѕРґРёРјРѕ, С‡С‚РѕР±С‹ РѕРґРЅР° РёР· С‚Р°Р±Р»РёС† СЃРѕРґРµСЂР¶Р°Р»Р° Р°С‚СЂРёР±СѓС‚ СЃ С‚РёРїРѕРј DATETIME.
+--1. WHERE РїРѕ РґР°С‚Рµ
+--Р”РѕР±Р°РІР»СЏСЋ СЃС‚СЂРѕРєСѓ РґР»СЏ РїСЂРѕРІРµСЂРєРё
 
-INSERT INTO author (first_name, last_name, birthday, gender) VALUES ('Аяр', 'Токоев', '2000-11-16','М')
+INSERT INTO author (first_name, last_name, birthday, gender) VALUES ('РђСЏСЂ', 'РўРѕРєРѕРµРІ', '2000-11-16','Рњ')
 SELECT * FROM author WHERE birthday = '2000-11-16'
---Извлечь из таблицы не всю дату, а только год. Например, год рождения автора.
---Для этого используется функция YEAR 
+--РР·РІР»РµС‡СЊ РёР· С‚Р°Р±Р»РёС†С‹ РЅРµ РІСЃСЋ РґР°С‚Сѓ, Р° С‚РѕР»СЊРєРѕ РіРѕРґ. РќР°РїСЂРёРјРµСЂ, РіРѕРґ СЂРѕР¶РґРµРЅРёСЏ Р°РІС‚РѕСЂР°.
+--Р”Р»СЏ СЌС‚РѕРіРѕ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ С„СѓРЅРєС†РёСЏ YEAR
 SELECT YEAR(birthday) FROM author
 
---7.SELECT GROUP BY с функциями агрегации
+--7.SELECT GROUP BY СЃ С„СѓРЅРєС†РёСЏРјРё Р°РіСЂРµРіР°С†РёРё
 --MIN
-SELECT MIN(birthday) FROM author 
+SELECT MIN(birthday) FROM author
 --MAX
-SELECT MAX(birthday) FROM author 
+SELECT MAX(birthday) FROM author
 --AVG
 SELECT AVG(id_author) FROM author
 --SUM
 SELECT SUM(id_location_archive) FROM location_archive
 --COUNT
-SELECT COUNT(*) FROM location_archive WHERE country = 'Казахстан'
+SELECT COUNT(*) FROM location_archive WHERE country = 'РљР°Р·Р°С…СЃС‚Р°РЅ'
 
 --8.SELECT GROUP BY + HAVING
-INSERT INTO book VALUES(1,'Охота на овец','25' ,'1987')
+INSERT INTO book VALUES(1,'РћС…РѕС‚Р° РЅР° РѕРІРµС†','25' ,'1987')
 --1
 SELECT id_author FROM book GROUP BY id_author HAVING MAX(price) > 20
 --2
@@ -152,35 +152,34 @@ SELECT SUM(id_author) FROM author GROUP BY first_name HAVING SUM(id_author) < 2
 SELECT first_name FROM author GROUP BY first_name HAVING AVG(id_author) > 1
 
 --9.SELECT JOIN
---1. LEFT JOIN двух таблиц и WHERE по одному из атрибутов
-SELECT * 
+--1. LEFT JOIN РґРІСѓС… С‚Р°Р±Р»РёС† Рё WHERE РїРѕ РѕРґРЅРѕРјСѓ РёР· Р°С‚СЂРёР±СѓС‚РѕРІ
+SELECT *
 FROM author LEFT JOIN book
-ON author.id_author = book.id_book WHERE gender = 'М'
---2. RIGHT JOIN. Получить такую же выборку, как и в 5.1
-SELECT TOP 2 * 
-FROM archive RIGHT JOIN author 
+ON author.id_author = book.id_book WHERE gender = 'Рњ'
+--2. RIGHT JOIN. РџРѕР»СѓС‡РёС‚СЊ С‚Р°РєСѓСЋ Р¶Рµ РІС‹Р±РѕСЂРєСѓ, РєР°Рє Рё РІ 5.1
+SELECT TOP 2 *
+FROM archive RIGHT JOIN author
 ON archive.name = author.first_name ORDER BY first_name ASC
---3. LEFT JOIN трех таблиц + WHERE по атрибуту из каждой таблицы
-SELECT * 
-FROM author   
--- к этой таблицы прикрепим две остальные по двум разным условиям совпадения
--- 2-ю таблицу по одному условию:
-LEFT JOIN book ON (author.id_author = book.id_author) 
--- 3-ю по другому:
-LEFT JOIN reader ON (reader.id_reader = author.id_author) 
-WHERE  author.id_author = 1 AND gender = 'М' AND book.id_author = 1  --условие для поля 1-ой таблицы
---4. FULL OUTER JOIN двух таблиц
-INSERT INTO location_archive (id_issue, address, country, name) VALUES (8, 'Казань, Гагарина 27', 'Татарстан', 'Гарри Поттер') 
-INSERT INTO location_archive (id_issue, address, country, name) VALUES (9, 'Йошкар-ола, Южная 45', 'Марий-Эль', 'Книжная шкатулка') 
+--3. LEFT JOIN С‚СЂРµС… С‚Р°Р±Р»РёС† + WHERE РїРѕ Р°С‚СЂРёР±СѓС‚Сѓ РёР· РєР°Р¶РґРѕР№ С‚Р°Р±Р»РёС†С‹
+SELECT *
+FROM author
+-- Рє СЌС‚РѕР№ С‚Р°Р±Р»РёС†С‹ РїСЂРёРєСЂРµРїРёРј РґРІРµ РѕСЃС‚Р°Р»СЊРЅС‹Рµ РїРѕ РґРІСѓРј СЂР°Р·РЅС‹Рј СѓСЃР»РѕРІРёСЏРј СЃРѕРІРїР°РґРµРЅРёСЏ
+-- 2-СЋ С‚Р°Р±Р»РёС†Сѓ РїРѕ РѕРґРЅРѕРјСѓ СѓСЃР»РѕРІРёСЋ:
+LEFT JOIN book ON (author.id_author = book.id_author)
+-- 3-СЋ РїРѕ РґСЂСѓРіРѕРјСѓ:
+LEFT JOIN reader ON (reader.id_reader = author.id_author)
+WHERE author.id_author = 1 AND gender = 'Рњ' AND book.id_author = 1 --СѓСЃР»РѕРІРёРµ РґР»СЏ РїРѕР»СЏ 1-РѕР№ С‚Р°Р±Р»РёС†С‹
+--4. FULL OUTER JOIN РґРІСѓС… С‚Р°Р±Р»РёС†
+INSERT INTO location_archive (id_issue, address, country, name) VALUES (8, 'РљР°Р·Р°РЅСЊ, Р“Р°РіР°СЂРёРЅР° 27', 'РўР°С‚Р°СЂСЃС‚Р°РЅ', 'Р“Р°СЂСЂРё РџРѕС‚С‚РµСЂ')
+INSERT INTO location_archive (id_issue, address, country, name) VALUES (9, 'Р™РѕС€РєР°СЂ-РѕР»Р°, Р®Р¶РЅР°СЏ 45', 'РњР°СЂРёР№-Р­Р»СЊ', 'РљРЅРёР¶РЅР°СЏ С€РєР°С‚СѓР»РєР°')
 --
-SELECT author.id_author, location_archive.id_location_archive 
-FROM author 
-FULL OUTER JOIN location_archive 
+SELECT author.id_author, location_archive.id_location_archive
+FROM author
+FULL OUTER JOIN location_archive
 ON author.id_author = location_archive.id_issue
 
---10. Подзапросы
---1. Написать запрос с WHERE IN (подзапрос)
-SELECT * FROM author WHERE first_name IN ('Дэниель', 'Харуко')
---2. Написать запрос SELECT atr1, atr2, (подзапрос) FROM ... 
+--10. РџРѕРґР·Р°РїСЂРѕСЃС‹
+--1. РќР°РїРёСЃР°С‚СЊ Р·Р°РїСЂРѕСЃ СЃ WHERE IN (РїРѕРґР·Р°РїСЂРѕСЃ)
+SELECT * FROM author WHERE first_name IN ('Р”СЌРЅРёРµР»СЊ', 'РҐР°СЂСѓРєРѕ')
+--2. РќР°РїРёСЃР°С‚СЊ Р·Р°РїСЂРѕСЃ SELECT atr1, atr2, (РїРѕРґР·Р°РїСЂРѕСЃ) FROM ...
 SELECT author.id_author, author.last_name,(SELECT book.id_book FROM book WHERE book.id_book = author.id_author) AS id_book FROM author
-
