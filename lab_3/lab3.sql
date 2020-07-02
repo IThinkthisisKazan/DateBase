@@ -142,6 +142,11 @@ SELECT SUM(id_location_archive) FROM location_archive
 --COUNT
 SELECT COUNT(*) FROM location_archive WHERE country = 'Казахстан'
 
+--discrube
+
+
+------------------
+
 --8.SELECT GROUP BY + HAVING
 INSERT INTO book VALUES(1,'Охота на овец','25' ,'1987')
 --1
@@ -149,7 +154,7 @@ SELECT id_author FROM book GROUP BY id_author HAVING MAX(price) > 20
 --2
 SELECT SUM(id_author) FROM author GROUP BY first_name HAVING SUM(id_author) < 2
 --3
-SELECT first_name FROM author GROUP BY first_name HAVING AVG(id_author) > 1
+SELECT id_author FROM book GROUP BY id_author HAVING SUm(id_author) > 2
 
 --9.SELECT JOIN
 --1. LEFT JOIN двух таблиц и WHERE по одному из атрибутов
